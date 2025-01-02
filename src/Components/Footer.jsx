@@ -7,7 +7,7 @@ import { PiChefHatLight } from "react-icons/pi";
 function Footer() {
     return (
         <>
-            <div style={{ minHeight: '100px', marginTop: '230px' }} className="row w-100 ">
+            <div style={{ minHeight: '100px', marginTop: '250px' }} className="row w-100">
                 <div className="col-1"></div>
                 <div className="col-4">
                 <div><PiChefHatLight size={30} className='Logo' /></div>
@@ -30,10 +30,10 @@ function Footer() {
                 </div>
                 <div style={{ lineHeight: '1.9' }} className="col-2 d-flex flex-column">
                     <h6 className='fw-bold'>Links</h6>
-                    <Link style={{ textDecoration: 'none', color: 'black', fontSize: '14px' }} >Home</Link>
-                    <Link style={{ textDecoration: 'none', color: 'black', fontSize: '14px' }} >Login</Link>
-                    <Link style={{ textDecoration: 'none', color: 'black', fontSize: '14px' }} >Register</Link>
-                    <Link style={{ textDecoration: 'none', color: 'black', fontSize: '14px' }} >About</Link>
+                    <Link to={'/'} style={{ textDecoration: 'none', color: 'black', fontSize: '14px' }} >Home</Link>
+                    <Link to={'/about'} style={{ textDecoration: 'none', color: 'black', fontSize: '14px' }} >Cart</Link>
+                    <Link style={{ textDecoration: 'none', color: 'black', fontSize: '14px' }} >Menu</Link>
+                    <Link to={'/cart'} style={{ textDecoration: 'none', color: 'black', fontSize: '14px' }} >About</Link>
                 </div>
                 <div className="col-1"></div>
             </div>
@@ -42,7 +42,7 @@ function Footer() {
                 <div className="col-3"></div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }} className="col-6">
                     <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', gap: '20px' }}>
-                        <a href='https://www.instagram.com/' target='_blank'><i style={{ color: 'black' }} class="fa-brands fa-instagram"></i></a>
+                        <a href='https://www.instagram.com/' target='_blank'><i style={{ color: 'black' }}  class="fa-brands fa-instagram"></i></a>
                         <a href='https://www.youtube.com/' target='_blank'><i style={{ color: 'black' }} class="fa-brands fa-youtube"></i></a>
                         <a href='https://www.github.com/' target='_blank'><i style={{ color: 'black' }} class="fa-brands fa-github"></i></a>
                         <a href='https://in.linkedin.com/' target='_blank'><i style={{ color: 'black' }} class="fa-brands fa-linkedin-in"></i></a>

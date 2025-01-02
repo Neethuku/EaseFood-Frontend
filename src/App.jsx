@@ -7,6 +7,7 @@ import HomePage from './Pages/HomePage'
 import SignUpPage from './Pages/SignUpPage'
 import SignupUserPage from './Pages/SignupUserPage'
 import SignupProprietorPage from './Pages/SignupProprietorPage'
+import CartPage from './Pages/CartPage'
 
 function App() {
   return (
@@ -14,10 +15,11 @@ function App() {
 <Header/>
 <Routes>
   <Route path='/' element={<HomePage/>}/>
-  <Route path='/aboutPage' element={<AboutPage/>}/>
+  <Route path='/about' element={<AboutPage/>}/>
   <Route path='/sign-up' element={<SignUpPage/>}/>
   <Route path='/signup-user' element={<SignupUserPage/>}/>
   <Route path='/proprietor-signup' element={<SignupProprietorPage/>}/>
+  <Route path='/cart' element={<CartPage/>}/>
 </Routes>
 <Footer/>
     </>

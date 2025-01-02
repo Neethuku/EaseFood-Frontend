@@ -10,19 +10,14 @@ import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { PiChefHatLight } from "react-icons/pi";
 import Tooltip from '@mui/material/Tooltip';
 import { Link } from 'react-router-dom';
-import SignUpPage from '../Pages/SignUpPage';
-
-
+import { orange } from '@mui/material/colors';
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-const navLinks = [
-    { title: 'Home', path: '/' },
-    { title: 'About', path: '/aboutpage' },
-    { title: 'Menu', path: '/menupage' },
-  ];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -31,6 +26,7 @@ function ResponsiveAppBar() {
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
+
     const handleOpenUserMenu = (event) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -44,31 +40,30 @@ function ResponsiveAppBar() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: 'white', color: 'black', boxShadow: 'none' }} >
+        <AppBar position="static" sx={{ backgroundColor: 'white', color: 'black', boxShadow: 'none' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
+                    {/* Logo for desktop */}
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center' }}>
-                        <PiChefHatLight size={30} className='Logo' />
+                        <PiChefHatLight className='Logo' size={30} />
                         <Typography
                             variant="h6"
-                            noWrap
-                            component="a"
-                            href="#app-bar-with-responsive-menu"
-                            sx={{ 
+                            component={Link}
+                            to="/"
+                            sx={{
                                 ml: 1,
                                 fontFamily: 'sans-serif',
                                 fontWeight: 700,
                                 color: 'inherit',
-                                textDecoration: 'none'
+                                textDecoration: 'none',
                             }}
+                            className='NavHover'
                         >
-                            <Link to={'/'} style={{textDecoration:'none',color:'black'}}>
                             Ease<span className='Logo'>Food</span>
-                            </Link>
-                           
                         </Typography>
                     </Box>
 
+                    {/* Mobile menu button */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -88,28 +83,36 @@ function ResponsiveAppBar() {
                             transformOrigin={{ vertical: 'top', horizontal: 'left' }}
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
-                            sx={{ display: { xs: 'block', md: 'none' } }}
                         >
-                            {navLinks.map((page) => (
-                                <MenuItem
-                                key={page.title}
-                                component={Link}  
-                                to={page.path}    
-                                onClick={handleCloseNavMenu}
-                              >
-                                <Typography sx={{ textAlign: 'center' }} >{page.title}</Typography>
-                              </MenuItem>
+                            {['Home', 'About', 'Cart'].map((page) => (
+                                <MenuItem key={page} component={Link} to={`/${page.toLowerCase()}`} onClick={handleCloseNavMenu}>
+                                    {page === 'Cart' ? (
+                                        <Badge className='cart-badge' badgeContent="0"
+                                            sx={{
+                                                '& .MuiBadge-badge': {
+                                                    color: "white",
+                                                    backgroundColor: ' #FEAB19'
+                                                }
+                                            }}
+                                        >
+                                            <ShoppingCartIcon />
+                                        </Badge>
+                                    ) : null}
+                                    <Typography textAlign="center" sx={{ ml: page === 'Cart' ? 1 : 0 }}>
+                                        {page}
+                                    </Typography>
+                                </MenuItem>
                             ))}
                         </Menu>
                     </Box>
 
+                    {/* Logo for mobile */}
                     <Box sx={{ display: { xs: 'flex', md: 'none' }, alignItems: 'center', flexGrow: 1 }}>
-                        <PiChefHatLight size={30} className='Logo' />
+                        <PiChefHatLight size={30} />
                         <Typography
-                            variant="h5"
-                            noWrap
-                            component="a"
-                            href="#app-bar-with-responsive-menu"
+                            variant="h6"
+                            component={Link}
+                            to="/"
                             sx={{
                                 ml: 1,
                                 fontFamily: 'sans-serif',
@@ -118,51 +121,48 @@ function ResponsiveAppBar() {
                                 textDecoration: 'none',
                             }}
                         >
-                            Ease<span className='Logo'>Food</span>
+                            Ease<span style={{ color: 'orange' }}>Food</span>
                         </Typography>
                     </Box>
 
+                    {/* Navigation buttons for desktop */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
-                        {navLinks.map((page) => (
+                        {['Home', 'About'].map((page) => (
                             <Button
-                            className='navBtn'
-                            key={page.title}
-                            component={Link}  
-                            to={page.path}    
-                                onClick={handleCloseNavMenu}
-                                sx={{
-                                    my: 2,
-                                    color: 'black',
-                                    display: 'block',
-                                    fontSize: '13px',
-                                    fontFamily: 'sans-serif',
-                                    fontWeight: 700
-                                }}
+                                key={page}
+                                component={Link}
+                                to={page === 'Home' ? '/' : `/${page.toLowerCase()}`}
+                                sx={{ my: 2, color: 'black', fontSize: '13px', fontWeight: 700 }}
+                                className='NavHover'
                             >
-                                {page.title}
+                                {page}
                             </Button>
                         ))}
+                        <Button
+                            component={Link}
+                            to="/cart"
+                            className='NavHover'
+                            sx={{ my: 2, color: 'black', display: 'flex', alignItems: 'center', fontSize: '13px', fontWeight: 700 }}
+                        >
+                            <Badge badgeContent="4" sx={{
+                                '& .MuiBadge-badge': {
+                                    color: "white",
+                                    backgroundColor: ' #FEAB19'
+                                }
+                            }}>
+                                <ShoppingCartIcon style={{ fontSize: '1.3rem' }} />
+                            </Badge>
+                            <Typography sx={{ ml: 1, fontWeight: '700', fontSize: '13px', lineHeight: '1.75', letterSpacing: '0.02857em' }}>Cart</Typography>
+                        </Button>
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}><Link to= "/sign-up">
-                    <Button
-                            sx={{
-                                backgroundColor: ' rgb(229, 150, 3)',
-                                color: 'white',
-                                fontFamily: 'sans-serif',
-                                fontWeight: 'bold',
-                                '&:hover': { backgroundColor: 'rgb(229, 150, 3)' }
-                            }}
-                        >
-                            Sign Up
-                        </Button>
-                    </Link>
-                      
+                    {/*  profile */}
+                    <Box sx={{ flexGrow: 0 }}>
                         {/* <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip> */}
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                <Avatar alt="User Avatar" src="/static/images/avatar/2.jpg" />
+                            </IconButton>
+                        </Tooltip> */}
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
@@ -175,7 +175,7 @@ function ResponsiveAppBar() {
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                                    <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -185,4 +185,5 @@ function ResponsiveAppBar() {
         </AppBar>
     );
 }
+
 export default ResponsiveAppBar;

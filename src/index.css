@@ -6,6 +6,115 @@ body{
 .Logo{
   color: rgb(229, 150, 3);
 }
+.NavHover:hover{
+  color: black !important; 
+}
+.about-icons{
+  margin-top: 70px !important;
+}
+.about{
+  text-align: justify !important;
+}
+.about-img{
+  border-radius: 3px;
+}
+
+.cart-container{
+  margin-top: 100px;
+}
+.explore-Btn{
+  background-color:  rgb(229, 150, 3) !important;
+  color: white !important;
+  width: 250px;
+  border: 1px solid white;
+  font-weight: bold;
+}
+.explore-Btn:hover{
+  border-color: white;
+  background-color: rgb(244, 165, 19) !important;
+
+}
+.explore-Btn:active,
+.explore-Btn:focus{
+  box-shadow: none !important;
+  outline: none !important;
+  border: 1px solid rgb(255, 255, 255);
+}
+.cart-Heading{
+  color: rgb(83, 83, 83);
+}
+.cart-Paragraph{
+  color: rgb(121, 120, 120);
+  font-family: sans-serif;
+}
+.quantity-btn{
+  border: none;
+  height: 25px;
+  border-radius: 5px;
+}
+.quantity-btn:hover{
+  background-color: rgb(228, 227, 227);
+}
+.td-price{
+  padding-top: 25px !important;
+}
+.empty-cart-Btn{
+  background-color:  rgb(229, 75, 3) !important;
+  color: white !important;
+  width: 200px;
+  border: 1px solid white;
+  font-weight: bold;
+}
+.view-more-Btn{
+  background-color: rgb(229, 150, 3);
+  color: white !important;
+  width: 200px;
+  border: 1px solid white;
+  font-weight: bold;
+}
+.view-more-Btn:hover{
+  border-color: white;
+  background-color: rgb(244, 165, 19) !important;
+
+}
+.view-more-Btn:active,
+.view-more-Btn:focus{
+  box-shadow: none !important;
+  outline: none !important;
+  border: 1px solid rgb(255, 255, 255);
+}
+.empty-cart-Btn:active,
+.empty-cart-Btn:focus{
+  box-shadow: none !important;
+  outline: none !important;
+  border: 1px solid rgb(255, 255, 255);
+}
+.empty-cart-Btn:hover{
+  border-color: white;
+  background-color:  rgb(235, 86, 16) !important;
+
+}
+.checkout-Btn{
+  background-color: rgb(229, 150, 3);
+  color: white !important;
+  width: 100%;
+  border: 1px solid white;
+  font-weight: bold;
+}
+.checkout-Btn:hover{
+  border-color: white;
+  background-color: rgb(244, 165, 19) !important;
+
+}
+.checkout-Btn:active,
+.checkout-Btn:focus{
+  box-shadow: none !important;
+  outline: none !important;
+  border: 1px solid rgb(255, 255, 255);
+}
+
+
+
 .Login-Btn{
   background-color: rgb(229, 150, 3);
   color: white;
@@ -50,6 +159,7 @@ body{
 }
 .signIn-Btn:hover{
   border-color: white;
+  color: white;
 }
 .signIn-Btn:active,
 .signIn-Btn:focus{
@@ -58,7 +168,7 @@ body{
   border: 1px solid rgb(255, 255, 255);
 }
 .formControl{
-  font-size: 14px;
+  font-size: 15px;
   /* width: 70%; */
 }
 .formControl:active,
@@ -69,6 +179,11 @@ body{
 .sign-up-card {
   box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1); /* Lighter shadow */
   border-radius: 8px;
+  min-height: 500px;
+}
+.left-card{
+  border-radius: 8px 0px 0px 8px !important;
+
 }
 .radioButton{
   text-align: center;
