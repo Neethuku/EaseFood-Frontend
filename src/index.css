@@ -6,8 +6,50 @@ body{
 .Logo{
   color: rgb(229, 150, 3);
 }
+.LogoText{
+  font-family: sans-serif;
+  font-weight: 700;
+  color: inherit;
+  text-decoration: none;
+}
+.bg-Logo{
+  background-color: rgb(229, 150, 3);
+}
 .NavHover:hover{
   color: black !important; 
+}
+.searchInput{
+  border: 1px solid rgb(186, 186, 186);
+  border-radius: 8px;
+  height: 35px;
+  background-color: #fbfafa;
+}
+.searchInput::placeholder {
+  color: #d3d2d2; /* Change this to your desired color */
+  opacity: 1;  /* Ensures that the color is fully opaque */
+  padding-left: 5px;
+  font-size: 14px;
+}
+
+.searchInput:focus,
+.searchInput:active {
+  border: 1px solid rgb(186, 186, 186) !important; 
+  outline: none !important; 
+}
+.categoryText{
+  color: rgb(116, 115, 115);
+}
+.view-category-btn{
+  border: 1px solid  rgb(229, 150, 3);
+  background-color: white;
+  color:  rgb(229, 150, 3);
+  font-size: 15px;
+  border-radius: 3px;
+}
+.view-category-btn:hover{
+  border: 1px solid  rgb(204, 134, 3);
+  color:  rgb(229, 150, 3);
+
 }
 .about-icons{
   margin-top: 70px !important;
@@ -18,7 +60,19 @@ body{
 .about-img{
   border-radius: 3px;
 }
-
+.add-to-cart{
+  background-color: rgb(229, 150, 3) !important;
+  color: white !important;
+  border-radius: 3px !important;
+  border: 1px solid  rgb(229, 150, 3) !important;
+}
+.more-details{
+  border: 1px solid  rgb(229, 150, 3) !important;
+  background-color: white !important;
+  color:  rgb(229, 150, 3) !important;
+  border-radius: 3px !important;
+  /* height: 32px; */
+}
 .cart-container{
   margin-top: 100px;
 }
@@ -111,6 +165,7 @@ body{
   box-shadow: none !important;
   outline: none !important;
   border: 1px solid rgb(255, 255, 255);
+  background-color: rgb(229, 150, 3);
 }
 
 
@@ -198,4 +253,44 @@ body{
 .radioIcon label{
   font-size: 13px;
   font-weight: bold;
+}
+.table-btn{
+  border: 2px solid green;
+  border-radius: 4px;
+  background-color: white;
+  color: green;
+}
+.table-btn:hover{
+  background-color: green;
+  border-color: green;
+}
+.table-btn:active,
+.table-btn:focus{
+  box-shadow: none !important;
+  outline: none !important;
+background-color: green;
+border-color: green;
+}
+.submit-table{
+  width: 200px;
+  /* box-shadow: none !important;
+  outline: none !important;
+  border: 1px solid orange;
+  background-color: white;
+  color:  rgb(229, 150, 3); */
+  background-color:  rgb(229, 150, 3);
+  color: white;
+  border: 1px solid orange;
+}
+.submit-table:hover{
+  background-color:  rgb(245, 161, 5);
+  color: white;
+  border: 1px solid orange;
+}
+.submit-table:active,
+.submit-table:focus{
+  box-shadow: none !important;
+  outline: none !important;
+  background-color:  rgb(229, 150, 3);
+border-color: rgb(229, 150, 3);
 }

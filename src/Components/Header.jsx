@@ -17,6 +17,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { Link } from 'react-router-dom';
 import { orange } from '@mui/material/colors';
 
+
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function ResponsiveAppBar() {
@@ -40,7 +41,7 @@ function ResponsiveAppBar() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: 'white', color: 'black', boxShadow: 'none' }}>
+        <AppBar position="sticky" sx={{ backgroundColor: 'white', color: 'black', boxShadow: 'none' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     {/* Logo for desktop */}
@@ -62,6 +63,7 @@ function ResponsiveAppBar() {
                             Ease<span className='Logo'>Food</span>
                         </Typography>
                     </Box>
+
 
                     {/* Mobile menu button */}
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -126,6 +128,18 @@ function ResponsiveAppBar() {
                     </Box>
 
                     {/* Navigation buttons for desktop */}
+                    {/* <form style={{ marginLeft: '190px' }}>
+
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className="hidden lg:inline searchInput"
+                        //   value={searchTerm}
+
+
+                        />
+                    </form> */}
+
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
                         {['Home', 'About'].map((page) => (
                             <Button
