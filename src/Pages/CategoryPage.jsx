@@ -4,8 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
 import demoimg from '../assets/demoimg.png'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGrip } from '@fortawesome/free-solid-svg-icons';
+
 
 function CategoryPage() {
   return (
