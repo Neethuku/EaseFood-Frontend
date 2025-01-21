@@ -25,8 +25,8 @@ body{
   background-color: #fbfafa;
 }
 .searchInput::placeholder {
-  color: #d3d2d2; /* Change this to your desired color */
-  opacity: 1;  /* Ensures that the color is fully opaque */
+  color: #d3d2d2; 
+  opacity: 1;  
   padding-left: 5px;
   font-size: 14px;
 }
@@ -71,7 +71,6 @@ body{
   background-color: white !important;
   color:  rgb(229, 150, 3) !important;
   border-radius: 3px !important;
-  /* height: 32px; */
 }
 .cart-container{
   margin-top: 100px;
@@ -224,7 +223,6 @@ body{
 }
 .formControl{
   font-size: 15px;
-  /* width: 70%; */
 }
 .formControl:active,
 .formControl:focus{
@@ -232,7 +230,7 @@ body{
   box-shadow: none;
 }
 .sign-up-card {
-  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+  box-shadow: 2px 2px 6px 0px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   min-height: 500px;
 }
@@ -255,10 +253,11 @@ body{
   font-weight: bold;
 }
 .table-btn{
-  border: 2px solid green;
+  border: 2px solid rgb(229, 150, 3) ;
   border-radius: 4px;
   background-color: white;
-  color: green;
+  color: rgb(229, 150, 3) ;
+  height: 80px !important;
 }
 .table-btn:hover{
   background-color: green;
@@ -271,13 +270,14 @@ body{
 background-color: green;
 border-color: green;
 }
+.table-btn-inactive{
+  border: 2px solid rgb(205, 207, 205) !important;
+  border-radius: 4px !important;
+  background-color: rgb(205, 207, 205) !important;
+}
+
 .submit-table{
   width: 200px;
-  /* box-shadow: none !important;
-  outline: none !important;
-  border: 1px solid orange;
-  background-color: white;
-  color:  rgb(229, 150, 3); */
   background-color:  rgb(229, 150, 3);
   color: white;
   border: 1px solid orange;
@@ -293,4 +293,63 @@ border-color: green;
   outline: none !important;
   background-color:  rgb(229, 150, 3);
 border-color: rgb(229, 150, 3);
+}
+.table-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px; 
+  height: 120px;
+  padding: 10px; 
+}
+
+.table-btn {
+  width: 60px;
+  height: 57px !important;
+  position: absolute;
+  z-index: 2;
+}
+
+.chair {
+  width: 30px;
+  height: 20px;
+  background-color: #6c757d;
+  position: absolute;
+}
+
+.top-chair {
+  top: 1px; 
+  left: 50%;
+  transform: translateX(-50%);
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.bottom-chair {
+  bottom: 1px; 
+  left: 50%;
+  transform: translateX(-50%);
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.left-chair {
+  left: -5px; 
+  top: 50%;
+  height: 25px;
+  width: 24px;
+  transform: translateY(-50%);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.right-chair {
+  right: -5px; 
+  top: 50%;
+  height: 25px;
+  width: 24px;
+  transform: translateY(-50%);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
 }

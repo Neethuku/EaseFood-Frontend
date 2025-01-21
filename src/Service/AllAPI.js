@@ -1,10 +1,11 @@
-import { CommonAPI } from "./CommonAPI"
+import { commonAPI } from "./CommonAPI"
 import { SERVER_URL } from "./ServerUrl"
 
-export const verifyPinAPI = async(pin) => {
-    return await CommonAPI("GET",`${SERVER_URL}/api/menu/${pin}`,null,{})
+export const getTableDataAPI = async(pin) => {
+    return await commonAPI("GET",`${SERVER_URL}/api/menu/${pin}/table/`)
 }
 
-// export const getAllFoodAPI = async() => {
-//     return await CommonAPI("GET",`${SERVER_URL}/api/food`,"","")
-// }
+export const getAllCategoriesAPI = async(pin) => {
+    return await commonAPI("GET",`${SERVER_URL}/api/menu/${pin}/category/`)
+}
+

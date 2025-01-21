@@ -6,7 +6,6 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { verifyPinAPI } from '../Service/AllAPI';
 import { fetchFoods } from '../Redux/Slices/foodSlices';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -15,65 +14,32 @@ function Landingpage() {
     const [modalShow, setModalShow] = useState(true);
     const [pin, setPin] = useState('')
     const navigate = useNavigate()
-    console.log(typeof(pin)); 
     const dispatch = useDispatch()
     const { foods, loading, error } = useSelector((state) => state.foodSlice);
+    const handleSubmit = async () => {
+        if (!pin) {
+            toast.warning('Please enter the "PIN"');
+            return;
+        }
+        try {
+            const response = await dispatch(fetchFoods(pin)).unwrap();
+            console.log('Response:', response);
+            if (response.status === 200) {
+                toast.success('PIN Verified');
+                sessionStorage.setItem("verifiedPin", pin)
+                setTimeout(() => {
+                    navigate('/table-track-page');
+                    setPin("");
+                }, 2000);
+            } else {
+                toast.error('Incorrect "PIN". Try again!');
+            }
+        } catch (error) {
+            toast.error('Incorrect "PIN". Try again!');
+            console.error('Error:', error);
+        }
+    };
 
-    console.log(foods);
-    
-      const handleSubmit = () => {
-        const result = dispatch(fetchFoods(pin))
-        console.log(result);
-        
-      }
-
-    // const handleSubmit = async() => {
-    //     if (!pin) {
-    //         toast.warning('Please enter the "PIN"')
-    //         return
-    //     }
-    //     try {
-    //         const result = await verifyPinAPI(pin)
-    //         if(result.status === 200){
-    //             toast.success('PIN Verified')
-    //             console.log(result.data);
-    //             setTimeout(()=>{
-    //                 navigate('/table-track-page')
-    //                 setPin("")
-    //             },2000)
-    //         }
-    //         else{
-    //             toast.error('Incorrect "PIN".Try again !!!')
-    //         }            
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
-   
-    
-
-    // const handleSubmit = async() => {
-    //     if (!pin) {
-    //         toast.warning('Please enter the "PIN"')
-    //         return
-    //     }
-    //     try {
-    //         const result = await dispatch(fetchFoods(pin))
-    //         if(result.status === 200){
-    //             toast.success('PIN Verified')
-    //             console.log(result.data);
-    //             setTimeout(()=>{
-    //                 navigate('/home-page')
-    //                 setPin("")
-    //             },2000)
-    //         }
-    //         else{
-    //             toast.error('Incorrect "PIN".Try again !!!')
-    //         }            
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // }
     return (
         <div>
             <Modal
