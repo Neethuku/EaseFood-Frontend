@@ -1,23 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { fetchFoods } from '../Redux/Slices/foodSlices';
-import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { verifyPinAPI } from '../Service/AllAPI';
 
 function TableTrackPage() {
-  const { foods, loading, error } = useSelector((state) => state.foodSlice);
   const naviagte = useNavigate('')
+  const [tables,setTables] = useState([])
   const [tableNo,setableNo] = useState('')
-  const tables = foods.tables
-  // const pin = sessionStorage.getItem("verifiedPin")
+  const [tableStatus,setTableStatus] = useState(false)
+  const pin = sessionStorage.getItem("verifiedPin")
 
-  if (loading) {
-    <p>Loading...</p>
+  useEffect(() => {
+    getTableDatas()
+  },[])
+
+  const getTableDatas = async() => {
+    const result = await verifyPinAPI(pin)
+    setTables(result.data.tables)
+    console.log('tres',result.data.tables);
+    
   }
 
   const choosetable = (table) => {
     setableNo(table) 
+    setTableStatus(true)
+
   }
   const reserveTable = () => {
     console.log('inside resrve table t',tableNo);
@@ -38,7 +46,7 @@ function TableTrackPage() {
           <div className="table-container">
             {/* Top Chair */}
             <div className="chair top-chair"></div>
-    
+
             {/* Table */}
             <Button className="table-btn" variant="primary" 
             onClick={()=>choosetable(table.table_number)}
@@ -62,8 +70,12 @@ function TableTrackPage() {
   
     </Row>
   
-    <div className="d-flex justify-content-center mt-5">
-      <Button className="submit-table fw-bold"
+    <div className="d-flex justify-content-center" style={{marginTop:'140px'}}>
+    <Button className="empty-cart-Btn fw-bold"
+     >
+        Cancel
+      </Button>
+      <Button className="submit-table fw-bold ms-3"
       onClick={reserveTable}>
         Reserve Now
       </Button>
@@ -79,86 +91,4 @@ function TableTrackPage() {
 }
 
 export default TableTrackPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import React, { useState } from 'react';
-// import { Container, Row, Col, Button } from 'react-bootstrap';
-// import { fetchFoods } from '../Redux/Slices/foodSlices';
-// import { useDispatch, useSelector } from 'react-redux';
-
-// function TableTrackPage() {
-//   const { foods, loading, error } = useSelector((state) => state.foodSlice);
-//   const [pin,setPin] = useState("")
-//   const tables = foods.tables
-
-//   if (loading) {
-//     <p>Loading...</p>
-//   }
-
-//   const handleSubmit = (e) => {
-//     console.log('e',e.target.value);
-    
-//   }
-
-//   console.log('food', foods);
-//   return (
-//     <Container className='mb-5'>
-//       <h4 className="text-center Logo mt-3">Reserve Your Table</h4>
-//       <Row className="mt-4 g-3 align-items-center justify-content-center">
-//         {
-//           tables?.length > 0 ? tables.map((table, index) => (
-//             <Col key={index} xs={4} sm={3} md={2} lg={1} className="d-flex justify-content-center">
-//               {
-//                 table.is_occupied ? (
-//                   <Button disabled className="w-100 table-btn-inactive" variant="primary">{table.table_number}
-//                   </Button>
-//                 ) : <Button className="w-100 table-btn" variant="primary">{table.table_number}
-//                 </Button>
-//               }
-//             </Col>
-//           )) : <p>No table found</p>
-//         }
-//       </Row>
-//       <div className='d-flex justify-content-center mt-5'>
-//         <Button className='submit-table fw-bold' onClick={(e)=>handleSubmit(e)}>Reserve Now</Button>
-//       </div>
-//     </Container>
-//   );
-// }
-
-// export default TableTrackPage;
-
-
 

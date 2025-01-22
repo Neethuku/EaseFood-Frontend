@@ -310,12 +310,31 @@ border-color: rgb(229, 150, 3);
   position: absolute;
   z-index: 2;
 }
+.table-btn:hover{
+  background-color: rgb(229, 150, 3);
+  border-color: rgb(229, 150, 3);
+}
 
 .chair {
   width: 30px;
   height: 20px;
-  background-color: #6c757d;
+  background-color: #3B6790;
   position: absolute;
+}
+.table-btn:disabled{
+  background-color: rgb(187, 187, 187);
+  border-color: rgb(187, 187, 187);;
+}
+.table-btn:active,
+.table-btn:focus
+{
+  background-color: rgb(229, 150, 3);
+  border-color: rgb(229, 150, 3);
+}
+
+.table-container .table-btn:disabled ~ .chair,
+.table-container .table-btn:disabled .chair{
+  background-color: rgb(187, 187, 187);
 }
 
 .top-chair {
@@ -325,6 +344,7 @@ border-color: rgb(229, 150, 3);
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
 }
+
 
 .bottom-chair {
   bottom: 1px; 

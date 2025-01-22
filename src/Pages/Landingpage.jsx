@@ -6,23 +6,20 @@ import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-import { fetchFoods } from '../Redux/Slices/foodSlices';
-import { useDispatch, useSelector } from 'react-redux';
+import { verifyPinAPI } from '../Service/AllAPI';
 
 //658872
 function Landingpage() {
     const [modalShow, setModalShow] = useState(true);
     const [pin, setPin] = useState('')
     const navigate = useNavigate()
-    const dispatch = useDispatch()
-    const { foods, loading, error } = useSelector((state) => state.foodSlice);
     const handleSubmit = async () => {
         if (!pin) {
             toast.warning('Please enter the "PIN"');
             return;
         }
         try {
-            const response = await dispatch(fetchFoods(pin)).unwrap();
+            const response = await verifyPinAPI(pin);
             console.log('Response:', response);
             if (response.status === 200) {
                 toast.success('PIN Verified');
