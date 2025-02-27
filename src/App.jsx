@@ -8,8 +8,11 @@ import CartPage from './Pages/CartPage'
 import CategoryPage from './Pages/CategoryPage'
 import Landingpage from './Pages/Landingpage'
 import TableTrackPage from './Pages/TableTrackPage'
+import { useContext } from 'react'
+import { pinAuthentication } from './Context API/ContextShare'
 
 function App() {
+  const {isAuthorized,setIsAuthorized} = useContext(pinAuthentication)
   return (
   <>
 <Header/>

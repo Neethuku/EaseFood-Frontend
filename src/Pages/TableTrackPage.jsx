@@ -1,77 +1,129 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { verifyPinAPI } from '../Service/AllAPI';
+import Spinner from 'react-bootstrap/Spinner';
+import { reservationtableId } from '../Context API/ContextShare';
+
 
 function TableTrackPage() {
   const naviagte = useNavigate('')
-  const [tables,setTables] = useState([])
+  const [getTables,setGetTables] = useState([])
   const [tableNo,setableNo] = useState('')
   const [tableStatus,setTableStatus] = useState(false)
+  const [loading,setLoading] = useState(false)
+  const {tableId,setTableId} = useContext(reservationtableId)
   const pin = sessionStorage.getItem("verifiedPin")
-
+  
   useEffect(() => {
     getTableDatas()
   },[])
 
   const getTableDatas = async() => {
-    const result = await verifyPinAPI(pin)
-    setTables(result.data.tables)
-    console.log('tres',result.data.tables);
-    
-  }
-
-  const choosetable = (table) => {
-    setableNo(table) 
-    setTableStatus(true)
-
-  }
-  const reserveTable = () => {
-    console.log('inside resrve table t',tableNo);
-    if(!tableNo){
-      toast.warning("Please choose a table!!!"); 
-    }else{
-      naviagte('/home-page')
+    setLoading(true)
+    try {
+      const result = await verifyPinAPI(pin)
+      setGetTables(result.data.tables)
+      console.log('Table result',result.data.tables);  
+    } catch (error) {
+      toast.error("Failed to load tables")
+    }finally{
+      setLoading(false)
     }
   }
 
-  return (
-    <Container className="mb-5">
-    <h3 className="text-center Logo mt-3">Reserve Your Table</h3>
-    <Row className="mt-5 g-3 align-items-center justify-content-center">
-      {
-        tables?.length > 0 ? tables.map((table,index) => (
-          <Col key={index} xs={6} sm={4} md={3} lg={2} className="d-flex justify-content-center">
-          <div className="table-container">
-            {/* Top Chair */}
-            <div className="chair top-chair"></div>
+  const choosetable = (tableData) => {
+    setableNo(tableData.table_number) 
+    const tableId = sessionStorage.setItem("tableId",tableData.id)
+    setTableStatus(true)
+    setTableId(tableData.table_number)
+    console.log('settable',tableData);
+    
+  }
+  const reserveTable = () => {
+    console.log('inside reserve table',tableNo);
+    if(!tableNo){
+      toast.warning("Please choose a table!!!"); 
+    }else{
+      sessionStorage.setItem("tableNumber",tableId)
+      naviagte('/home-page')
+    }
+  }
+  const cancelButton = (table) =>{
+    setableNo('')
+    setTableStatus(false)
+  }
 
-            {/* Table */}
-            <Button className="table-btn" variant="primary" 
-            onClick={()=>choosetable(table.table_number)}
-            disabled={tableNo && tableNo !== table.table_number}>
-            {table.table_number}
-            </Button>
-    
-            {/* Bottom Chair */}
-            <div className="chair bottom-chair"></div>
-    
-            {/* Left Chair */}
-            <div className="chair left-chair"></div>
-    
-            {/* Right Chair */}
-            <div className="chair right-chair"></div>
+  return (
+    <div className="mb-5">
+          <h3 className="text-center Logo mt-3">Reserve Your Table</h3>
+      {
+        loading?(
+          <div className="d-flex justify-content-center align-items-center" style={{ height: '60vh' }}>
+          <Spinner animation="border" variant="secondary" />
           </div>
-        </Col>
-        )):<p>No table found</p>
-      }
-   
-  
-    </Row>
-  
+        ):(
+          <Container>
+          <Row className="mt-5 g-3 align-items-center justify-content-center">
+          {
+            getTables?.length > 0 ? getTables.map((table,index) => (
+              <Col key={index} xs={6} sm={4} md={3} lg={2} className="d-flex justify-content-center">
+              <div className="table-container">
+                {/* Top Chair */}
+                {tableNo==table.table_number?
+                
+                <div className="chair top-chair"></div>   
+                :
+                <div style={{backgroundColor:"rgb(187, 187, 187)",borderColor:"rgb(187, 187, 187)"}} className="chair top-chair"></div>
+                
+                }
+                
+                
+    
+                {/* Table */}
+                <Button className="table-btn" variant="primary" 
+                onClick={()=>choosetable(table)}
+                disabled={tableNo && tableNo !== table.table_number}>
+                {table.table_number}
+                </Button>
+        
+                {/* Bottom Chair */}
+                {tableNo==table.table_number?
+                
+                <div className="chair bottom-chair"></div>   
+                :
+                <div style={{backgroundColor:"rgb(187, 187, 187)",borderColor:"rgb(187, 187, 187)"}} className="chair bottom-chair"></div>
+                
+                }
+        
+                {/* Left Chair */}
+                {tableNo==table.table_number?
+                
+                <div className="chair left-chair"></div>   
+                :
+                <div style={{backgroundColor:"rgb(187, 187, 187)",borderColor:"rgb(187, 187, 187)"}} className="chair left-chair"></div>
+                
+                }
+        
+                {/* Right Chair */}
+                {tableNo==table.table_number?
+                
+                <div className="chair right-chair"></div>   
+                :
+                <div style={{backgroundColor:"rgb(187, 187, 187)",borderColor:"rgb(187, 187, 187)"}} className="chair right-chair"></div>
+                
+                }
+              </div>
+            </Col>
+            )):<p>No table found</p>
+          }
+       
+      
+        </Row>
+          
     <div className="d-flex justify-content-center" style={{marginTop:'140px'}}>
-    <Button className="empty-cart-Btn fw-bold"
+    <Button onClick={()=>cancelButton()} className="empty-cart-Btn fw-bold"
      >
         Cancel
       </Button>
@@ -79,16 +131,21 @@ function TableTrackPage() {
       onClick={reserveTable}>
         Reserve Now
       </Button>
+      
     </div>
+    </Container>
+        )
+      }
+   
+
     <ToastContainer
                 autoClose={1500}
                 hideProgressBar={true}
                 position="top-center"
             />
-  </Container>
+  </div>
   
   );
 }
 
 export default TableTrackPage;
-

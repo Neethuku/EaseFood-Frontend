@@ -18,7 +18,6 @@ function AboutPage() {
             maxime rem delectus velit fugiat corporis obcaecati maiores blanditiis nostrum suscipit qui accusantium ea harum!       
             Lorem ipsum dolor sit amet consectetur elit adipisicing elit. Cupiditate exercitationem veritatis ipsum nihil, eaque quisquam 
             maxime rem delectus velit fugiat corporis obcaecati maiores blanditiis nostrum suscipit qui accusantium ea harum!
-
           </p>
         </div>
         <div className="col-12 col-md-6 text-center">

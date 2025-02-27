@@ -1,18 +1,64 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import EmptyCartImage from '../assets/cart-image.gif';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import dummyImg from '../assets/dummy img.webp'
 import Card from 'react-bootstrap/Card';
 import Table from 'react-bootstrap/Table';
+import { reservationtableId } from '../Context API/ContextShare';
+import { getCartAPI, incrementCartItemAPI } from '../Service/AllAPI';
+import { SERVER_URL } from '../Service/ServerUrl';
+import { cartCountContext } from '../Context API/ContextShare';
 
 
 
 function CartPage() {
+  const tableID = Number(sessionStorage.getItem("tableId"))
+  // const tableNumber = Number(sessionStorage.getItem("tableNumber")) 
   const [emptyCart,setEmptyCart] = useState(false)
+  const [allCartFoods,setAllCartFoods] = useState([])
+      const {cartCount,setCartCount} = useContext(cartCountContext)
+  
+  // const {tableId,setTableId} = useContext(reservationtableId)
+  console.log('cartdata',allCartFoods);    
+
+  useEffect(() => {
+    handleGetCart()
+  },[])
+
+  // const handleGetCart = async() => {
+  //   const cartResult = await getCartAPI(tableID) 
+  //   console.log('cartapiResult',cartResult); 
+       
+  //   if(cartResult.status === 200){
+  //     setAllCartFoods(cartResult.data)
+  //     setCartCount(cartResult.data.length)
+  //   }else{
+  //     console.log(cartResult);
+      
+  //   }
+  // }
+  const handleGetCart = async () => {
+    const cartResult = await getCartAPI(tableID);
+  
+    if (cartResult.status === 200) {
+      setAllCartFoods([...cartResult.data]); // Force re-render
+      setCartCount(cartResult.data.length);
+    }
+  };
+  
+  
+
+  const handleIncreQty = async(id,action) => {
+    console.log(id,action);
+    const result = await incrementCartItemAPI(id,action)
+    console.log(result);
+  }
+
   const handleEmptyCart = () => {
     setEmptyCart(true)
   }
+
   return (
     <div className='container mt-5'>
       {
@@ -29,71 +75,43 @@ function CartPage() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className='td-price'>1</td>
-            <td className='d-flex align-items-center'>
-              <div>
-                <img className="img-fluid" width={'80px'} src={dummyImg} alt="food img" />
-              </div>
-              <div className='d-flex align-items-center'>
-                <p className='ms-3 mb-0'>Masala Dosa</p>
-              </div>
-              </td>
-             <td>
-              <div className='d-flex  align-items-center mt-2'>
-                <button className="quantity-btn  me-2">-</button>
-                3
-                <button className="quantity-btn ms-2">+</button>
-              </div>
-             </td>
-            <td className='td-price'>₹180</td>
-          </tr>
-          <tr>
-            <td className='td-price'>2</td>
-            <td className='d-flex'>
-              <div>
-                <img width={'80px'} src={dummyImg} alt="food img" />
-              </div>
-              <div className='d-flex align-items-center'>
-                <p className='ms-3'>Masala Dosa</p>
-              </div>
-              </td>
-             <td>
-              <div className='d-flex mt-3'>
-                <button className="quantity-btn me-2">-</button>
-                3
-                <button className="quantity-btn ms-2">+</button>
-              </div>
-             </td>
-            <td className='td-price'>₹180</td>
-          </tr>
-          <tr>
-            <td className='td-price'>3</td>
-            <td className='d-flex'>
-              <div>
-                <img width={'80px'} src={dummyImg} alt="food img" />
-              </div>
-              <div className='d-flex align-items-center'>
-                <p className='ms-3'>Masala Dosa</p>
-              </div>
-              </td>
-  
-              <td>
-              <div className='d-flex mt-3'>
-                <button className="quantity-btn me-2">-</button>
-                3
-                <button className="quantity-btn ms-2">+</button>
-              </div>
-             </td>
-            <td className='td-price'>₹180</td>
-          </tr>
+          {
+            allCartFoods && allCartFoods.length>0?(allCartFoods.map((cartItem,index)=>(
+              <tr key={index}>
+              <td className='td-price'>{index+1}</td>
+              <td className='d-flex align-items-center'>
+                <div>
+                  <img className="img-fluid" width={'80px'} src={`${SERVER_URL + cartItem.image}`} alt="food img" />
+                </div>
+                <div className='d-flex align-items-center'>
+                  <p className='ms-3 mb-0'>{cartItem.food}</p>
+                </div>
+                </td>
+               <td>
+                <div className='d-flex  align-items-center mt-2'>
+                  <button className="quantity-btn  me-2" onClick={()=>handleIncreQty(cartItem.id,'-')}>-</button>
+                  {cartItem.quantity}
+                  <button className="quantity-btn ms-2" onClick={()=>handleIncreQty(cartItem.id,'+')}>+</button>
+                </div>
+               </td>
+              <td className='td-price'>₹{cartItem.food_price}</td>
+            </tr>
+            ))
+          ):(
+              <tr>
+                 <td>
+              empty
+            </td>
+              </tr>
+           
+            )}
         </tbody>
       </Table>
       <div className='d-flex flex-wrap justify-content-end mt-4 mb-3'>
           <Button onClick={handleEmptyCart} className='empty-cart-Btn me-2 mb-2'>
             Empty Cart
           </Button>
-          <Link  to = {'/'}>
+          <Link  to = {'/home-page'}>
           <Button className='view-more-Btn mb-2'>
             View More
           </Button>
@@ -127,7 +145,7 @@ function CartPage() {
         <p className='cart-Paragraph mb-4'>
           You can go to home page to view more menu.
         </p>
-        <Link  to = {'/'}>
+        <Link  to = {'/home-page'}>
         <Button className='explore-Btn'>
           Explore Dishes
         </Button>

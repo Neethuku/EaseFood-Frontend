@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { PiChefHatLight } from "react-icons/pi";
@@ -13,6 +13,9 @@ function Landingpage() {
     const [modalShow, setModalShow] = useState(true);
     const [pin, setPin] = useState('')
     const navigate = useNavigate()
+    useEffect(() => {
+        sessionStorage.clear()
+    },[])
     const handleSubmit = async () => {
         if (!pin) {
             toast.warning('Please enter the "PIN"');

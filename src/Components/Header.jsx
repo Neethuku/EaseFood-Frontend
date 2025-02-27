@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,6 +16,9 @@ import { PiChefHatLight } from "react-icons/pi";
 import Tooltip from '@mui/material/Tooltip';
 import { Link } from 'react-router-dom';
 import { orange } from '@mui/material/colors';
+import { cartCountContext } from '../Context API/ContextShare';
+import { IoMdInformationCircle } from "react-icons/io";
+import { IoMdHome } from "react-icons/io";
 
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -23,7 +26,8 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+    const {cartCount,setCartCount} = useContext(cartCountContext)
+    
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -86,25 +90,33 @@ function ResponsiveAppBar() {
                             open={Boolean(anchorElNav)}
                             onClose={handleCloseNavMenu}
                         >
-                            {['Home', 'About', 'Cart'].map((page) => (
-                                <MenuItem key={page} component={Link} to={`/${page.toLowerCase()}`} onClick={handleCloseNavMenu}>
-                                    {page === 'Cart' ? (
-                                        <Badge className='cart-badge' badgeContent="0"
-                                            sx={{
-                                                '& .MuiBadge-badge': {
-                                                    color: "white",
-                                                    backgroundColor: ' #FEAB19'
-                                                }
-                                            }}
-                                        >
-                                            <ShoppingCartIcon />
-                                        </Badge>
-                                    ) : null}
-                                    <Typography textAlign="center" sx={{ ml: page === 'Cart' ? 1 : 0 }}>
-                                        {page}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
+                          {[
+    { name: 'Home', link: '/home', icon:<IoMdHome style={{paddingRight:'3px'}} size={22} />},
+    { name: 'About', link: '/about', icon: <IoMdInformationCircle style={{paddingRight:'3px'}} size={22}  />  },
+    { name: 'Cart', link: '/cart' }].map((page) => (
+    <MenuItem key={page.name} component={Link} to={page.link} onClick={handleCloseNavMenu}>
+        {page.name === 'Cart' ? (
+            <Badge
+                className='cart-badge'
+                badgeContent={cartCount ? cartCount : '0'}
+                sx={{
+                    '& .MuiBadge-badge': {
+                        color: 'white',
+                        backgroundColor: '#FEAB19'
+                    }
+                }}
+            >
+                <ShoppingCartIcon size={22} style={{paddingRight:'3px'}}  />
+            </Badge>
+        ) : page.icon ? (
+            <>{page.icon}</>
+        ) : null}
+        <Typography textAlign="center" sx={{ ml: page.name === 'Cart' ? 1 : 0 }}>
+            {page.name}
+        </Typography>
+    </MenuItem>
+))}
+
                         </Menu>
                     </Box>
 
@@ -158,7 +170,7 @@ function ResponsiveAppBar() {
                             className='NavHover'
                             sx={{ my: 2, color: 'black', display: 'flex', alignItems: 'center', fontSize: '13px', fontWeight: 700 }}
                         >
-                            <Badge badgeContent="4" sx={{
+                            <Badge badgeContent={cartCount?cartCount:'0'} sx={{
                                 '& .MuiBadge-badge': {
                                     color: "white",
                                     backgroundColor: ' #FEAB19'
