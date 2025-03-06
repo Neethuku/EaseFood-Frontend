@@ -19,6 +19,7 @@ import { orange } from '@mui/material/colors';
 import { cartCountContext } from '../Context API/ContextShare';
 import { IoMdInformationCircle } from "react-icons/io";
 import { IoMdHome } from "react-icons/io";
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -27,7 +28,8 @@ function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const {cartCount,setCartCount} = useContext(cartCountContext)
-    
+    const pin = sessionStorage.getItem("verifiedPin")
+    const tableNo = sessionStorage.getItem("tableId")
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -91,7 +93,7 @@ function ResponsiveAppBar() {
                             onClose={handleCloseNavMenu}
                         >
                           {[
-    { name: 'Home', link: '/home', icon:<IoMdHome style={{paddingRight:'3px'}} size={22} />},
+    { name: 'Home', link: '/home-page', icon:<IoMdHome style={{paddingRight:'3px'}} size={22} />},
     { name: 'About', link: '/about', icon: <IoMdInformationCircle style={{paddingRight:'3px'}} size={22}  />  },
     { name: 'Cart', link: '/cart' }].map((page) => (
     <MenuItem key={page.name} component={Link} to={page.link} onClick={handleCloseNavMenu}>
@@ -157,7 +159,7 @@ function ResponsiveAppBar() {
                             <Button
                                 key={page}
                                 component={Link}
-                                to={page === 'Home' ? '/' : `/${page.toLowerCase()}`}
+                                to={page === 'Home' ? '/home-page' : `/${page.toLowerCase()}`}
                                 sx={{ my: 2, color: 'black', fontSize: '13px', fontWeight: 700 }}
                                 className='NavHover'
                             >
@@ -166,7 +168,13 @@ function ResponsiveAppBar() {
                         ))}
                         <Button
                             component={Link}
-                            to="/cart"
+                            onClick={(e) => {
+                                if (!pin) {
+                                    e.preventDefault(); // Prevent navigation if pin is not verified
+                                    alert("You need to verify before accessing the cart!");
+                                }
+                            }}
+                            to={pin && tableNo ? "/cart" : "/"}
                             className='NavHover'
                             sx={{ my: 2, color: 'black', display: 'flex', alignItems: 'center', fontSize: '13px', fontWeight: 700 }}
                         >
@@ -208,6 +216,11 @@ function ResponsiveAppBar() {
                     </Box>
                 </Toolbar>
             </Container>
+            <ToastContainer
+                      autoClose={1500}
+                      hideProgressBar={true}
+                      position="top-center"
+                  />
         </AppBar>
     );
 }

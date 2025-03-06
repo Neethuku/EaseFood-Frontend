@@ -40,6 +40,8 @@ function CartPage() {
   // }
   const handleGetCart = async () => {
     const cartResult = await getCartAPI(tableID);
+    console.log(cartResult.data);
+    
   
     if (cartResult.status === 200) {
       setAllCartFoods([...cartResult.data]); // Force re-render
