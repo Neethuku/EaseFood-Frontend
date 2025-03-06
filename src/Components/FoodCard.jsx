@@ -22,19 +22,20 @@ function FoodCard({ displaydata }) {
       const reqHeader = {
          "Content-Type":"multipart/form-data"
       }
-      const imageUrl = `${SERVER_URL + data.food_image}`;
-      console.log(imageUrl);
+      // const imageUrl = `${SERVER_URL + data.food_image}`;
+      // console.log(imageUrl);
       
-      const response = await fetch(imageUrl);
-      const blob = await response.blob();
-      const file = new File([blob], "food_image.jpg", { type: blob.type });
+      // const response = await fetch(imageUrl);
+      // const blob = await response.blob();
+      // const file = new File([blob], "food_image.jpg", { type: blob.type });
   
       const reqBody = new FormData();
-      reqBody.append("food", data.food_name);
+      // reqBody.append("food", data.food_name);
       reqBody.append("quantity", "1");
-      reqBody.append("image", file);  
+      reqBody.append("food", data.id);
+      // reqBody.append("image", file);  
       reqBody.append("table_number", tableId);
-      reqBody.append("food_price", data.price);
+      // reqBody.append("food_price", data.price);
 
   
       console.log("Request Body:");
